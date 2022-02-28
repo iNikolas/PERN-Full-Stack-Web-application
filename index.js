@@ -15,7 +15,7 @@ app.use(bodyParser.json({type: 'application/vnd.api+json'})) //req.body
 
 app.post('/todos', async (req, res, next) => {
     try {
-        const description = req.body.data?.attributes?.description
+        const description = req.body.data.attributes.description || null
         const newTodoRequest = await pool.query('INSERT INTO todo (todo_uid, description) VALUES(uuid_generate_v4(), $1) RETURNING *', [description])
         const newTodo = newTodoRequest.rows[0]
         const todo_uid = newTodo.todo_uid

@@ -13,4 +13,4 @@ This application is a regular Todo app. But it shows a great usage and conjuncti
 
 ### Update 01.03.2022
 
-{json.api} principles implemented in the project. Added Not Found and any accidental error handling according to the json.api specification.
+**{json.api}** principles implemented in the project. Added Not Found and any accidental error handling according to the json.api specification.
