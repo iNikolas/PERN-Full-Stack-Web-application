@@ -5,14 +5,14 @@ import handleEditTodo from "./handleEditTodo";
 
 
 const EditTodoModal = ({show, setShow, todoEntry, todos, setTodos}) => {
-    const todo_id = todoEntry.todo_id
+    const todo_uid = todoEntry.todo_uid
     const description = todoEntry.description
     const [modalDescription, setModalDescription] = useState(description)
     const isDisabled = description === modalDescription || !modalDescription.length
 
     const handleClose = () => setShow(false)
     const handleEdit = async () => {
-        await handleEditTodo(modalDescription, todos, setTodos, todo_id)
+        await handleEditTodo(modalDescription, todos, setTodos, todo_uid)
         handleClose()
     }
     const handleModalDescriptionChange = (event) => {

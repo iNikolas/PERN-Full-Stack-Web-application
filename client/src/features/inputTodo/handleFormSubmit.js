@@ -13,7 +13,7 @@ const handleFormSubmit = async (event, description, setDescription, todos, setTo
         })
         const result = await response.json()
 
-        if (result.todo_id) {
+        if (result.todo_uid) {
             setTodos([...todos, result])
             setDescription('')
         }

@@ -2,17 +2,18 @@ import React from "react";
 import Table from 'react-bootstrap/Table'
 import EditTodo from "./editTodo/EditTodo";
 import handleDeleteTodo from "./handleDeleteTodo";
+import './ListTodos.css'
 
 const ListTodos = ({todos, setTodos}) => {
 
     const todosMapped = todos.map(todoEntry => {
-        const todo_id = todoEntry.todo_id
+        const todo_uid = todoEntry.todo_uid
         return (
-            <tr key={todo_id}>
-                <td>{todoEntry.description}</td>
-                <td><EditTodo todoEntry={todoEntry} todos={todos} setTodos={setTodos}/></td>
-                <td>
-                    <button onClick={() => handleDeleteTodo(todo_id, todos, setTodos)}
+            <tr key={todo_uid}>
+                <td className='w-100 overflow-hidden'>{todoEntry.description}</td>
+                <td className='text-center align-middle btn-td'><EditTodo todoEntry={todoEntry} todos={todos} setTodos={setTodos}/></td>
+                <td className='text-center align-middle btn-td'>
+                    <button onClick={() => handleDeleteTodo(todo_uid, todos, setTodos)}
                             className='btn btn-danger'>Delete
                     </button>
                 </td>
