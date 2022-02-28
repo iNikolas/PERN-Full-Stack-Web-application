@@ -3,7 +3,8 @@ const handleEditTodo = async (modalDescription, todos, setTodos, todo_uid) => {
     const response = await fetch(`http://localhost:5000/todos/${todo_uid}`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/vnd.api+json',
+            'Accept': 'application/vnd.api+json'
         },
         body: JSON.stringify(body)
     })
