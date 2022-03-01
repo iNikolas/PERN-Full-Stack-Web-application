@@ -1,26 +1,28 @@
 exports.internalServerError = (error, req, res, next) => {
-    console.error(`ERROR occurred: ${error.stack}`);
-    const status = 500
+    console.error(`ERROR occurred ${new Date()}: ${error.stack}`);
+    const code = 500
     const title = error.name
-    const message = error.message
+    const detail = error.message
 
-    handleErrorSubmit({status, title, message}, res)
+    handleErrorSubmit({code, title, detail}, req, res)
 }
 
 exports.pageNotFoundError = (req, res) => {
-    const status = 404
+    const code = 404
     const title = 'HTTP 404'
-    const message = 'Not found.'
+    const detail = 'Not found.'
 
-    handleErrorSubmit({status, title, message}, res)
+    handleErrorSubmit({code, title, detail}, req, res)
 };
 
-function handleErrorSubmit(error, res) {
-    res.status(error.status)
+function handleErrorSubmit(error, req, res) {
+    const pointer = req.originalUrl
+    res.status(error.code)
     res.set('Content-Type', 'application/vnd.api+json')
 
     const resData = {
-        errors: [error]
+        jsonapi: {version: "1.0"},
+        errors: [Object.assign(error, {source: {pointer}})]
     }
     res.json(resData)
 }

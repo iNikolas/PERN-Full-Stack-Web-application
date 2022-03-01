@@ -1,11 +1,13 @@
 const handleDeleteTodo = async (todo_uid, todos, setTodos) => {
     try {
         const response = await fetch(`http://localhost:5000/todos/${todo_uid}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/vnd.api+json'
+            }
         })
-        const deletionResult = await response.json()
 
-        if (deletionResult.todo_uid) {
+        if (response.status === 204) {
             const newTodos = todos.filter(todoEntry => {
                 return todoEntry.todo_uid !== todo_uid
             })

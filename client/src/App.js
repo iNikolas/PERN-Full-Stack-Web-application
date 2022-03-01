@@ -2,24 +2,15 @@ import './App.css';
 import React, {useEffect, useState} from "react";
 import ListTodos from "./features/listTodos/ListTodos";
 import InputTodo from "./features/inputTodo/InputTodo";
+import handleGetAllTodos from "./handleGetAllTodos";
 
 
 function App() {
 
     const [todos, setTodos] = useState([]);
 
-    const getAllTodos = async () => {
-        try {
-            const response = await fetch('http://localhost:5000/todos')
-            const allTodos = await response.json()
-            setTodos(allTodos)
-        } catch (error) {
-            console.error(error.message)
-        }
-    }
-
     useEffect(() => {
-        getAllTodos()
+        handleGetAllTodos(setTodos)
     }, [])
 
     return (

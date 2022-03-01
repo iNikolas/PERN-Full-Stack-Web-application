@@ -1,5 +1,15 @@
 const handleEditTodo = async (modalDescription, todos, setTodos, todo_uid) => {
-    const body = {description: modalDescription}
+
+    const body = {
+        data: {
+            type: "todo",
+            id: todo_uid,
+            attributes: {
+                description: modalDescription
+            }
+        }
+    }
+
     const response = await fetch(`http://localhost:5000/todos/${todo_uid}`, {
         method: 'PUT',
         headers: {
@@ -8,11 +18,12 @@ const handleEditTodo = async (modalDescription, todos, setTodos, todo_uid) => {
         },
         body: JSON.stringify(body)
     })
-    const result = await response.json()
+    const resultRaw = await response.json()
+    const result = resultRaw.data
 
-    if (result.todo_uid) {
+    if (result) {
         const newTodos = todos.map(entry => {
-            if (entry.todo_uid === result.todo_uid) return {todo_uid: entry.todo_uid, description: result.description}
+            if (entry.todo_uid === result.id) return {todo_uid: result.id, description: result.attributes.description}
             return entry
         })
         setTodos(newTodos)
