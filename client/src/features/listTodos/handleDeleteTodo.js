@@ -1,6 +1,8 @@
+import {backend} from "../../common/constants";
+
 const handleDeleteTodo = async (todo_uid, todos, setTodos) => {
     try {
-        const response = await fetch(`http://localhost:5000/todos/${todo_uid}`, {
+        const response = await fetch(`${backend}/todos/${todo_uid}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/vnd.api+json'

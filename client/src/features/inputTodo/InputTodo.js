@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import handleFormSubmit from "./handleFormSubmit";
 
-const InputTodo = ({todos, setTodos}) => {
+const InputTodo = ({todos, setTodos, pagination, setPagination, setCurrentPage}) => {
 
     const [description, setDescription] = useState('')
 
@@ -20,9 +20,10 @@ const InputTodo = ({todos, setTodos}) => {
     }
 
     return (
-        <form onSubmit={(event) => handleFormSubmit(event, description, setDescription, todos, setTodos)}
+        <form onSubmit={(event) => handleFormSubmit(event, description, setDescription, todos, setTodos, pagination, setCurrentPage)}
               className='d-flex mt-5'>
-            <input onInvalid={handleValidity} required maxLength='255' value={description} onChange={handleChange} type='text' className='form-control'/>
+            <input onInvalid={handleValidity} required maxLength='255' value={description} onChange={handleChange}
+                   type='text' className='form-control'/>
             <button className='btn btn-success'>Add</button>
         </form>
     )

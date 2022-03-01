@@ -1,12 +1,17 @@
-const handleGetAllTodos = async (setTodos) => {
+const handleGetTodos = async (currentPage, setCurrentPage, setTodos, setPagination) => {
     try {
-        const response = await fetch('http://localhost:5000/todos', {
+        const responseRaw = await fetch(currentPage, {
             headers: {
                 'Accept': 'application/vnd.api+json'
             }
         })
-        const allTodosRaw = (await response.json()).data
+
+        const response = await responseRaw.json()
+        const allTodosRaw = response.data
+        const {links, meta} = response
         const allTodos = []
+
+        setPagination({links, meta})
 
         allTodosRaw.forEach(todoEntry => {
             const todo_uid = todoEntry.id
@@ -22,4 +27,4 @@ const handleGetAllTodos = async (setTodos) => {
     }
 }
 
-export default handleGetAllTodos
+export default handleGetTodos

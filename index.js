@@ -10,7 +10,7 @@ app.use(bodyParser.json({type: 'application/vnd.api+json'}))
 
 app.post('/todos', todoController.createTodo)
 
-app.get('/todos', todoController.getAllTodos)
+app.get('/todos', todoController.getTodos)
 app.get('/todos/:id', todoController.getTodo)
 
 app.put('/todos/:id', todoController.updateTodo)
