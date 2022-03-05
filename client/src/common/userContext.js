@@ -1,5 +1,6 @@
 import React, {createContext, useEffect, useState} from "react"
 import {backend} from "./constants";
+import Loader from "./Loader";
 
 export const UserContext = createContext([null, (user) => user])
 
@@ -15,7 +16,7 @@ const UserProvider = (props) => {
 
     return (
         <UserContext.Provider value={[user, setUser]}>
-            {working ? 'Loading' : props.children}
+            {working ? <Loader/> : props.children}
         </UserContext.Provider>
     );
 }
@@ -24,7 +25,7 @@ export default UserProvider;
 
 const handleRefreshToken = async (setUser, setWorking) => {
     try {
-        const response = await fetch(`${backend}/token`, {
+        const response = await fetch(`${backend}/users/token`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/vnd.api+json'
@@ -33,6 +34,9 @@ const handleRefreshToken = async (setUser, setWorking) => {
         })
 
         const goodResponse = response.ok
+
+        console.log(new Date() + 'Succeeded to refresh token: ' + goodResponse)
+
         const userData = await response.json()
         const expiresInSec = userData.meta?.expiresInSec || 300
 
@@ -40,7 +44,7 @@ const handleRefreshToken = async (setUser, setWorking) => {
 
         setTimeout(() => {
             handleRefreshToken(setUser, setWorking)
-        }, expiresInSec * 1000 - 500)
+        }, expiresInSec * 1000 - 1000)
     } catch (error) {
         console.error(error.message)
     } finally {

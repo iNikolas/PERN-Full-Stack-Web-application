@@ -1,0 +1,8 @@
+.logout-img {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+.user-name {
+    cursor: pointer;
+}

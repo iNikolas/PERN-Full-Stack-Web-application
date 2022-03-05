@@ -1,4 +1,5 @@
 import {backend} from "../../common/constants";
+import handleToastErrorCreation from "../../common/ToastError/handleToastErrorCreation";
 
 
 const handleFormSubmit = (endPointString, name, password, setUser, setError) => {
@@ -24,9 +25,7 @@ const handleFormSubmit = (endPointString, name, password, setUser, setError) => 
 
             if (response.ok) return setUser(await response.json())
 
-            const errorStatus = await response.json()
-            const error = errorStatus.errors[0]
-            setError(error)
+            await handleToastErrorCreation(response, setError)
 
         } catch (error) {
             console.error(error.message)
