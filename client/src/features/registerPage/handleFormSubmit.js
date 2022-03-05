@@ -1,4 +1,5 @@
-const backend = 'http://localhost:4000/users'
+import {backend} from "../../common/constants";
+
 
 const handleFormSubmit = (endPointString, name, password, setUser, setError) => {
     return async (event) => {
@@ -11,7 +12,7 @@ const handleFormSubmit = (endPointString, name, password, setUser, setError) => 
                 }
             }
 
-            const response = await fetch(`${backend}/${endPointString}`, {
+            const response = await fetch(`${backend}/users/${endPointString}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/vnd.api+json',

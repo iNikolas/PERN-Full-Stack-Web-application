@@ -1,16 +1,17 @@
 import './App.css';
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import ListTodos from "./features/listTodos/ListTodos";
 import InputTodo from "./features/inputTodo/InputTodo";
 import handleGetTodos from "./handleGetTodos";
 import Paginator from "./features/paginator/Paginator";
 import {backend, pageLimit} from './common/constants'
 import RegisterPage from "./features/registerPage/RegisterPage";
+import {UserContext} from "./common/userContext";
 
 
 function App() {
 
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useContext(UserContext)
     const [todos, setTodos] = useState([])
     const [pagination, setPagination] = useState({
         links: {self: `${backend}/todos?page[offset]=0&page[limit]=${pageLimit}`},
@@ -19,9 +20,12 @@ function App() {
     const [currentPage, setCurrentPage] = useState(pagination.links.self)
 
     useEffect(() => {
-        if (user) handleGetTodos(currentPage, setCurrentPage, setTodos, setPagination)
-        console.log(user)
+        //if (user) handleGetTodos(currentPage, setCurrentPage, setTodos, setPagination)
     }, [user])
+
+    useEffect(() => {
+
+    }, [])
 
     if (!user) return <RegisterPage setUser={setUser}/>
 
