@@ -2,11 +2,17 @@ import {backend} from "../../common/constants";
 import handleToastErrorCreation from "../../common/ToastError/handleToastErrorCreation";
 
 
-const handleFormSubmit = (endPointString, name, password, setUser, setError, setWorking) => {
+const handleFormSubmit = (endPointString, name, password, passwordConfirm, setUser, setError, setWorking, setShowOverlay, setErrorClassName) => {
     return async (event) => {
         event.preventDefault()
         try {
             setWorking(true)
+
+            if (password !== passwordConfirm && endPointString === '') {
+                setShowOverlay(true)
+                setErrorClassName('error-state')
+                throw new Error('Passwords do not match')
+            }
 
             const body = {
                 data: {

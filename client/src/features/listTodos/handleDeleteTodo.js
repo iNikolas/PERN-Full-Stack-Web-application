@@ -1,6 +1,6 @@
-import {backend} from "../../common/constants";
+import {backend, pageLimit} from "../../common/constants";
 
-const handleDeleteTodo = async (todo_uid, todos, setTodos, user) => {
+const handleDeleteTodo = async (todo_uid, todos, setTodos, user, currentPage, setCurrentPage) => {
     try {
         const token = user.data.token
 
@@ -16,7 +16,14 @@ const handleDeleteTodo = async (todo_uid, todos, setTodos, user) => {
             const newTodos = todos.filter(todoEntry => {
                 return todoEntry.todo_uid !== todo_uid
             })
-            setTodos(newTodos)
+
+            if (newTodos.length === 0) {
+                const currentOffset = currentPage.match(/page\[offset]=(?<pageOffset>\d+)/).groups.pageOffset || 0
+
+                setCurrentPage(`${backend}/todos?page[offset]=${currentOffset - pageLimit}&page[limit]=${pageLimit}`)
+            } else {
+                setTodos(newTodos)
+            }
         }
     } catch (error) {
         console.error(error.message)

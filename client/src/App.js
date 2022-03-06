@@ -36,7 +36,7 @@ function App() {
             <div className='container d-flex flex-column align-items-center'>
                 <div className='w-100'><InputTodo todos={todos} setTodos={setTodos} pagination={pagination}
                                                   setPagination={setPagination} setCurrentPage={setCurrentPage}/></div>
-                <ListTodos todos={todos} setTodos={setTodos}/>
+                <ListTodos currentPage={currentPage} setCurrentPage={setCurrentPage} todos={todos} setTodos={setTodos}/>
                 {pagination.meta.totalPages > 1 && <Paginator pagination={pagination} setCurrentPage={setCurrentPage}/>}
             </div>
             <Dashboard showDashboard={showDashboard} setShowDashboard={setShowDashboard}/>

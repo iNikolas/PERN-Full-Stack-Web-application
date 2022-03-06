@@ -1,7 +1,5 @@
 import {backend, pageLimit} from "../../common/constants";
 
-let incrementCount = 0
-
 const handleFormSubmit = async (event, description, setDescription, todos, setTodos, pagination, setCurrentPage, user) => {
 
     event.preventDefault()
@@ -31,11 +29,11 @@ const handleFormSubmit = async (event, description, setDescription, todos, setTo
         if (newTodo_uid) {
             if (todos.length < pageLimit) {
                 setTodos([...todos, {todo_uid: newTodo_uid, description: newTodoDescription}])
-                incrementCount++
             } else {
-                const totalTodos = +pagination.meta.totalTodos + incrementCount
-                setCurrentPage(`${backend}/todos?page[offset]=${totalTodos - totalTodos % pageLimit}&page[limit]=${pageLimit}`)
-                incrementCount = 0
+                const totalTodos = pagination.meta.totalTodos
+                const totalPages = Math.floor(totalTodos / pageLimit)
+                setCurrentPage(`${backend}/todos?page[offset]=${totalPages * pageLimit}&page[limit]=${pageLimit}`)
+
             }
             setDescription('')
         }

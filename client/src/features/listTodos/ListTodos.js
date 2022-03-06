@@ -5,7 +5,7 @@ import handleDeleteTodo from "./handleDeleteTodo";
 import './ListTodos.css'
 import {UserContext} from "../../common/userContext";
 
-const ListTodos = ({todos, setTodos}) => {
+const ListTodos = ({todos, setTodos, currentPage, setCurrentPage}) => {
 
     const [user] = useContext(UserContext)
 
@@ -17,7 +17,7 @@ const ListTodos = ({todos, setTodos}) => {
                 <td className='text-center align-middle btn-td'><EditTodo todoEntry={todoEntry} todos={todos}
                                                                           setTodos={setTodos}/></td>
                 <td className='text-center align-middle btn-td'>
-                    <button onClick={() => handleDeleteTodo(todo_uid, todos, setTodos, user)}
+                    <button onClick={() => handleDeleteTodo(todo_uid, todos, setTodos, user, currentPage, setCurrentPage)}
                             className='btn btn-danger'>Delete
                     </button>
                 </td>
