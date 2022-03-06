@@ -30,10 +30,16 @@ const handleFormSubmit = async (event, description, setDescription, todos, setTo
             if (todos.length < pageLimit) {
                 setTodos([...todos, {todo_uid: newTodo_uid, description: newTodoDescription}])
             } else {
+                const lastPage = pagination.links.last
+                const currentPage = pagination.links.self
+                const totalPages = pagination.meta.totalPages
                 const totalTodos = pagination.meta.totalTodos
-                const totalPages = Math.floor(totalTodos / pageLimit)
-                setCurrentPage(`${backend}/todos?page[offset]=${totalPages * pageLimit}&page[limit]=${pageLimit}`)
 
+                if (currentPage === lastPage || currentPage !== lastPage && !(totalTodos % pageLimit)) {
+                    setCurrentPage(`${backend}/todos?page[offset]=${(totalPages) * pageLimit}&page[limit]=${pageLimit}`)
+                } else {
+                    setCurrentPage(lastPage)
+                }
             }
             setDescription('')
         }
