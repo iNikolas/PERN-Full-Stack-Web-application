@@ -2,10 +2,12 @@ import {backend} from "../../common/constants";
 import handleToastErrorCreation from "../../common/ToastError/handleToastErrorCreation";
 
 
-const handleFormSubmit = (endPointString, name, password, setUser, setError) => {
+const handleFormSubmit = (endPointString, name, password, setUser, setError, setWorking) => {
     return async (event) => {
         event.preventDefault()
         try {
+            setWorking(true)
+
             const body = {
                 data: {
                     type: 'users',
@@ -27,8 +29,10 @@ const handleFormSubmit = (endPointString, name, password, setUser, setError) => 
 
             await handleToastErrorCreation(response, setError)
 
+            setWorking(false)
         } catch (error) {
             console.error(error.message)
+            setWorking(false)
         }
     }
 }

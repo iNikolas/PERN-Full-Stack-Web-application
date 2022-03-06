@@ -1,12 +1,19 @@
 import React, {useContext, useEffect, useState} from "react"
 import Modal from 'react-bootstrap/Modal'
 import {UserContext} from "../../common/userContext"
+import {ErrorContext} from "../../common/errorContext"
 import Button from "react-bootstrap/Button"
 import Form from 'react-bootstrap/Form'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from "react-bootstrap/Tooltip"
+import './Dashboard.css'
+import handleUpdateUser from "./handleUpdateUser"
+import ToastComponent from "../../common/ToastError/ToastError";
 
 const Dashboard = ({showDashboard, setShowDashboard}) => {
 
-    const [user] = useContext(UserContext)
+    const [user, setUser] = useContext(UserContext)
+    const [, setError] = useContext(ErrorContext)
     const {name, rights} = user.data.attributes
     const id = user.data.id
 
@@ -15,6 +22,9 @@ const Dashboard = ({showDashboard, setShowDashboard}) => {
     const [newPassword, setNewPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
     const [changePassword, setChangePassword] = useState(false)
+    const [showOverlay, setShowOverlay] = useState(false)
+    const [errorClassName, setErrorClassName] = useState('')
+    const [working, setWorking] = useState(false)
 
     const isDisabled = !oldPassword || (changePassword && (!newPassword || !passwordConfirmation)) || ((newName === name || !newName) && !changePassword)
 
@@ -24,14 +34,52 @@ const Dashboard = ({showDashboard, setShowDashboard}) => {
 
             if (fieldName === 'newName') setNewName(value)
             if (fieldName === 'oldPassword') setOldPassword(value)
-            if (fieldName === 'newPassword') setNewPassword(value)
-            if (fieldName === 'passwordConfirmation') setPasswordConfirmation(value)
+            if (fieldName === 'newPassword') {
+                setNewPassword(value)
+                if (showOverlay) {
+                    setShowOverlay(false)
+                    setErrorClassName('')
+                }
+            }
+            if (fieldName === 'passwordConfirmation') {
+                setPasswordConfirmation(value)
+                if (showOverlay) {
+                    setShowOverlay(false)
+                    setErrorClassName('')
+                }
+            }
         }
     }
 
-    const handleFormSubmit = () => {
+    const handleFormSubmit = async () => {
 
-        console.log({newName, oldPassword, newPassword, passwordConfirmation})
+        if (changePassword && newPassword !== passwordConfirmation) {
+            setShowOverlay(true)
+            setErrorClassName('error-state')
+            return
+        }
+        try {
+            setWorking(true)
+            const body = {
+                data: {
+                    type: "users",
+                    id,
+                    attributes: {
+                        newName: (newName === name || !newName) ? null : newName,
+                        oldPassword,
+                        newPassword: changePassword ? newPassword : null
+                    }
+                }
+            }
+
+            const result = await handleUpdateUser(body, user, setUser, setError)
+
+            if (result === 'success') setShowDashboard(false)
+        } catch (error) {
+            console.error(error.message)
+        } finally {
+            setWorking(false)
+        }
     }
 
     useEffect(() => {
@@ -41,8 +89,11 @@ const Dashboard = ({showDashboard, setShowDashboard}) => {
             setNewPassword('')
             setPasswordConfirmation('')
             setChangePassword(false)
+            setShowOverlay(false)
+            setErrorClassName('')
+            setError(null)
         }
-    }, [showDashboard])
+    }, [showDashboard, name])
 
     return <Modal
         show={showDashboard}
@@ -52,11 +103,13 @@ const Dashboard = ({showDashboard, setShowDashboard}) => {
         size="lg"
     >
         <Modal.Header closeButton>
-            <Modal.Title>Dashboard panel: {name}</Modal.Title>
+            <Modal.Title>Dashboard for: {name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+            <ToastComponent/>
             <p><b>Your unique user ID is</b>: {id}</p>
             <p><b>Rights</b>: {rights}</p>
+
             <Form onSubmit={(event) => event.preventDefault()}>
                 <Form.Group className="mb-3" controlId="formNewName">
                     <Form.Label>New user name</Form.Label>
@@ -78,8 +131,16 @@ const Dashboard = ({showDashboard, setShowDashboard}) => {
 
                 {changePassword && <><Form.Group className="mb-3" controlId="formNewPassword">
                     <Form.Label>New password</Form.Label>
-                    <Form.Control value={newPassword} onChange={handleFieldChange('newPassword')} required
-                                  type="password" placeholder="Password"/>
+                    <OverlayTrigger
+                        placement="top"
+                        show={showOverlay}
+                        overlay={<Tooltip id='newPasswordTooltip'>Passwords do not mach!</Tooltip>}
+                    >
+                        <Form.Control className={errorClassName} value={newPassword}
+                                      onChange={handleFieldChange('newPassword')}
+                                      required
+                                      type="password" placeholder="Password"/>
+                    </OverlayTrigger>
                     <Form.Text className="text-muted">
                         You can leave this field empty to persist current password
                     </Form.Text>
@@ -87,7 +148,8 @@ const Dashboard = ({showDashboard, setShowDashboard}) => {
 
                     <Form.Group className="mb-3" controlId="formPasswordConfirm">
                         <Form.Label>Confirm new password</Form.Label>
-                        <Form.Control value={passwordConfirmation} onChange={handleFieldChange('passwordConfirmation')}
+                        <Form.Control className={errorClassName} value={passwordConfirmation}
+                                      onChange={handleFieldChange('passwordConfirmation')}
                                       required type="password" placeholder="Password"/>
                     </Form.Group></>}
 
@@ -96,13 +158,13 @@ const Dashboard = ({showDashboard, setShowDashboard}) => {
                                 type="checkbox" label="Change password"/>
                 </Form.Group>
             </Form>
-
         </Modal.Body>
         <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowDashboard(false)}>
                 Close
             </Button>
-            <Button disabled={isDisabled} onClick={handleFormSubmit} variant="primary">Save changes</Button>
+            <Button disabled={isDisabled || working} onClick={handleFormSubmit}
+                    variant="primary">{working ? 'Updating...' : 'Save changes'}</Button>
         </Modal.Footer>
     </Modal>
 }

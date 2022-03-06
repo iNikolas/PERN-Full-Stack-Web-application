@@ -8,7 +8,7 @@ import './Header.css'
 import {ErrorContext} from "../../common/errorContext";
 import handleLogoutUser from "./handleLogoutUser";
 
-const Header = ({setShowDashboard}) => {
+const Header = ({setShowDashboard, setTodos, setCurrentPage}) => {
 
     const [user, setUser] = useContext(UserContext)
     const [, setError] = useContext(ErrorContext)
@@ -26,15 +26,15 @@ const Header = ({setShowDashboard}) => {
             <Navbar.Toggle/>
             <Navbar.Collapse className="justify-content-end">
                 <Navbar.Text>
-                    Signed in as: <a className='user-name' onClick={() => setShowDashboard(true)}>{name}</a>
+                    Signed in as: <button className='user-name' onClick={() => setShowDashboard(true)}>{name}</button>
                 </Navbar.Text>
                 <img
                     src={logoutImg}
                     width="15"
                     height="15"
                     className="d-inline-block align-top m-1 logout-img"
-                    alt="Logout image"
-                    onClick={async () => await handleLogoutUser(setError, setUser)}
+                    alt="Logout"
+                    onClick={async () => await handleLogoutUser(setError, setUser, setTodos, setCurrentPage)}
                 />
             </Navbar.Collapse>
         </Container>

@@ -2,11 +2,12 @@ import React, {useContext, useState} from 'react'
 import './RegisterPage.css'
 import handleFormSubmit from "./handleFormSubmit";
 import {ErrorContext} from "../../common/errorContext";
-import ToastComponent from "../../common/ToastError/ToastError";
+import ToastComponent from "../../common/ToastError/ToastError"
 
 const RegisterPage = ({setUser}) => {
 
-    const [, setError] = useContext(ErrorContext);
+    const [, setError] = useContext(ErrorContext)
+    const [working, setWorking] = useState(false)
     const [mode, setMode] = useState('signIn')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
@@ -34,14 +35,14 @@ const RegisterPage = ({setUser}) => {
                 </div>
                 <div className="button-group">
                     {(mode === 'signIn') &&
-                    <span>Need an account? <a onClick={() => setMode('register')}>Create it now!</a></span>}
+                    <span>Need an account? <button className='link-button' onClick={() => setMode('register')}>Create it now!</button></span>}
                     {(mode === 'register') &&
-                    <span>Already registered? <a onClick={() => setMode('signIn')}>Sign In!</a></span>}
+                    <span>Already registered? <button className='link-button' onClick={() => setMode('signIn')}>Sign In!</button></span>}
                     {(mode === 'register') &&
-                    <button onClick={handleFormSubmit('', name, password, setUser, setError)} type="submit"
+                    <button disabled={working} onClick={handleFormSubmit('', name, password, setUser, setError, setWorking)} type="submit"
                             className="login-button">Register</button>}
                     {(mode === 'signIn') &&
-                    <button onClick={handleFormSubmit('login', name, password, setUser, setError)} type="submit"
+                    <button disabled={working} onClick={handleFormSubmit('login', name, password, setUser, setError, setWorking)} type="submit"
                             className="login-button">Sign
                         In</button>}
                 </div>

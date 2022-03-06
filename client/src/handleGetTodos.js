@@ -1,8 +1,11 @@
-const handleGetTodos = async (currentPage, setCurrentPage, setTodos, setPagination) => {
+const handleGetTodos = async (currentPage, setTodos, setPagination, user) => {
     try {
+        const token = user.data.token
+
         const responseRaw = await fetch(currentPage, {
             headers: {
-                'Accept': 'application/vnd.api+json'
+                'Accept': 'application/vnd.api+json',
+                Authorization: `Bearer ${token}`
             }
         })
 

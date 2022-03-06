@@ -49,16 +49,16 @@ body {
 .button-group {
     text-align: center;
 }
+
 .button-group span {
     font-size: 1.2em;
 }
 
-.button-group span a {
+.button-group span button {
     color: goldenrod !important;
 }
 
-.button-group span a:hover {
-    cursor: pointer;
+.button-group span button:hover {
     background-color: hsla(180, 100%, 20%, 0.3);
 }
 
@@ -102,4 +102,14 @@ body {
 
 .login-button:focus {
     background-color: hsla(201, 100%, 50%, 0.5);
+}
+
+.link-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    display: inline;
+    margin: 0;
+    padding: 0;
 }

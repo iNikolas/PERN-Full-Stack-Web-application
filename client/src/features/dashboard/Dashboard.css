@@ -1,0 +1,11 @@
+.error-state {
+    border-color: indianred !important;
+}
+
+.dashboard-container {
+    position: relative;
+}
+
+.loader-dashboard-container {
+    position: absolute;
+}

@@ -14,6 +14,7 @@ import Dashboard from "./features/dashboard/Dashboard";
 function App() {
 
     const [user, setUser] = useContext(UserContext)
+    const userId = user?.data?.id
     const [showDashboard, setShowDashboard] = useState(false)
     const [todos, setTodos] = useState([])
     const [pagination, setPagination] = useState({
@@ -23,18 +24,14 @@ function App() {
     const [currentPage, setCurrentPage] = useState(pagination.links.self)
 
     useEffect(() => {
-        //if (user) handleGetTodos(currentPage, setCurrentPage, setTodos, setPagination)
-    }, [user])
-
-    useEffect(() => {
-
-    }, [])
+        if (userId) handleGetTodos(currentPage, setTodos, setPagination, user)
+    }, [userId, currentPage])
 
     if (!user) return <RegisterPage setUser={setUser}/>
 
     return (
         <>
-            <Header setShowDashboard={setShowDashboard}/>
+            <Header setCurrentPage={setCurrentPage} setTodos={setTodos} setShowDashboard={setShowDashboard}/>
             <h1 className='text-center mt-5'>PERN Todo List</h1>
             <div className='container d-flex flex-column align-items-center'>
                 <div className='w-100'><InputTodo todos={todos} setTodos={setTodos} pagination={pagination}

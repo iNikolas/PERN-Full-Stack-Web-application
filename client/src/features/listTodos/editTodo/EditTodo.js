@@ -7,7 +7,7 @@ const EditTodo = ({todoEntry, todos, setTodos}) => {
     return (
         <>
             <EditTodoModal show={show} setShow={setShow} todoEntry={todoEntry} todos={todos} setTodos={setTodos}/>
-            <button onClick={(event) => setShow(true)} className='btn btn-warning'>Edit</button>
+            <button onClick={() => setShow(true)} className='btn btn-warning'>Edit</button>
         </>
     )
 }

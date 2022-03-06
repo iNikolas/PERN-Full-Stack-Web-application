@@ -2,11 +2,12 @@ import {backend, pageLimit} from "../../common/constants";
 
 let incrementCount = 0
 
-const handleFormSubmit = async (event, description, setDescription, todos, setTodos, pagination, setCurrentPage) => {
+const handleFormSubmit = async (event, description, setDescription, todos, setTodos, pagination, setCurrentPage, user) => {
 
     event.preventDefault()
 
     try {
+        const token = user.data.token
         const body = {
             data: {
                 type: 'todo',
@@ -17,7 +18,8 @@ const handleFormSubmit = async (event, description, setDescription, todos, setTo
             method: 'POST',
             headers: {
                 'Content-Type': 'application/vnd.api+json',
-                'Accept': 'application/vnd.api+json'
+                Accept: 'application/vnd.api+json',
+                Authorization: `Bearer ${token}`
             },
             body: JSON.stringify(body)
         })

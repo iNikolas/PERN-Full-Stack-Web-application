@@ -1,7 +1,7 @@
-import {backend} from "../../common/constants";
+import {backend, pageLimit} from "../../common/constants";
 import handleToastErrorCreation from "../../common/ToastError/handleToastErrorCreation";
 
-const handleLogoutUser = async (setError, setUser) => {
+const handleLogoutUser = async (setError, setUser, setTodos, setCurrentPage) => {
     try {
         const response = await fetch(`${backend}/users/logout`, {
             method: 'DELETE',
@@ -17,6 +17,8 @@ const handleLogoutUser = async (setError, setUser) => {
         console.error(error.message)
     } finally {
         setUser(null)
+        setCurrentPage(`${backend}/todos?page[offset]=0&page[limit]=${pageLimit}`)
+        setTodos([])
     }
 }
 

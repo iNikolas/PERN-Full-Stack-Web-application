@@ -35,8 +35,6 @@ const handleRefreshToken = async (setUser, setWorking) => {
 
         const goodResponse = response.ok
 
-        console.log(new Date() + 'Succeeded to refresh token: ' + goodResponse)
-
         const userData = await response.json()
         const expiresInSec = userData.meta?.expiresInSec || 300
 
