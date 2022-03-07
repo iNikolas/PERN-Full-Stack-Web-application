@@ -27,18 +27,27 @@ const handleFormSubmit = async (event, description, setDescription, todos, setTo
         const newTodoDescription = result.attributes?.description
 
         if (newTodo_uid) {
+            console.log(pagination)
             if (todos.length < pageLimit) {
                 setTodos([...todos, {todo_uid: newTodo_uid, description: newTodoDescription}])
             } else {
+                const nextPage = pagination.links.next
                 const lastPage = pagination.links.last
                 const currentPage = pagination.links.self
-                const totalPages = pagination.meta.totalPages
                 const totalTodos = pagination.meta.totalTodos
 
-                if (currentPage === lastPage || currentPage !== lastPage && !(totalTodos % pageLimit)) {
-                    setCurrentPage(`${backend}/todos?page[offset]=${(totalPages) * pageLimit}&page[limit]=${pageLimit}`)
-                } else {
+                if (!nextPage) {
+                    const currentOffset = currentPage.match(/page\[offset]=(?<pageOffset>\d+)/).groups.pageOffset || '0'
+                    const newOffset = +currentOffset + pageLimit
+                    setCurrentPage(`${backend}/todos?page[offset]=${newOffset}&page[limit]=${pageLimit}`)
+                }
+                if (nextPage && !!(totalTodos % pageLimit)) {
                     setCurrentPage(lastPage)
+                }
+                if (nextPage && !(totalTodos % pageLimit)) {
+                    const lastOffset = lastPage.match(/page\[offset]=(?<pageOffset>\d+)/).groups.pageOffset || '0'
+                    const newOffset = +lastOffset + pageLimit
+                    setCurrentPage(`${backend}/todos?page[offset]=${newOffset}&page[limit]=${pageLimit}`)
                 }
             }
             setDescription('')

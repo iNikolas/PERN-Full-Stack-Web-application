@@ -10,6 +10,8 @@ import {UserContext} from "./common/userContext";
 import Header from "./features/header/Header";
 import Dashboard from "./features/dashboard/Dashboard";
 
+const initialLink = `${backend}/todos?page[offset]=0&page[limit]=${pageLimit}`
+const nextLink = `${backend}/todos?page[offset]=${pageLimit}&page[limit]=${pageLimit}`
 
 function App() {
 
@@ -18,14 +20,19 @@ function App() {
     const [showDashboard, setShowDashboard] = useState(false)
     const [todos, setTodos] = useState([])
     const [pagination, setPagination] = useState({
-        links: {self: `${backend}/todos?page[offset]=0&page[limit]=${pageLimit}`},
+        links: {self: `${backend}/todos?page[offset]=0&page[limit]=${pageLimit}`,
+            first: initialLink,
+            prev: null,
+            next: nextLink,
+            last: initialLink},
         meta: {totalPages: null}
     })
     const [currentPage, setCurrentPage] = useState(pagination.links.self)
+    const isEmptyTodoList = !!todos.length
 
     useEffect(() => {
-        if (userId) handleGetTodos(currentPage, setTodos, setPagination, user)
-    }, [userId, currentPage])
+        if ((userId)) handleGetTodos(currentPage, setTodos, setPagination, user)
+    }, [userId, currentPage, isEmptyTodoList])
 
     if (!user) return <RegisterPage setUser={setUser}/>
 

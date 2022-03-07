@@ -7,7 +7,7 @@ const handleDeleteTodo = async (todo_uid, todos, setTodos, user, currentPage, se
         const response = await fetch(`${backend}/todos/${todo_uid}`, {
             method: 'DELETE',
             headers: {
-                'Accept': 'application/vnd.api+json',
+                Accept: 'application/vnd.api+json',
                 Authorization: `Bearer ${token}`
             }
         })
@@ -19,8 +19,13 @@ const handleDeleteTodo = async (todo_uid, todos, setTodos, user, currentPage, se
 
             if (newTodos.length === 0) {
                 const currentOffset = currentPage.match(/page\[offset]=(?<pageOffset>\d+)/).groups.pageOffset || 0
+                const newOffset = currentOffset - pageLimit
 
-                setCurrentPage(`${backend}/todos?page[offset]=${currentOffset - pageLimit}&page[limit]=${pageLimit}`)
+                if (newOffset >= 0) {
+                    setCurrentPage(`${backend}/todos?page[offset]=${newOffset}&page[limit]=${pageLimit}`)
+                } else {
+                    setTodos(newTodos)
+                }
             } else {
                 setTodos(newTodos)
             }

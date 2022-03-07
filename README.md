@@ -15,3 +15,7 @@ This application is a regular Todo app. But it shows a great usage and conjuncti
 
 **{json.api}** principles implemented in the project. Added "Not Found" and any accidental error handling according to the json.api specification.
 Completely compliant with json.api **Pagination** had been implemented.
+
+### Update 07.03.2022
+
+Application released. Front-End and Back-End parts were divided into two separate parts. The Back-End part is located [here](https://github.com/iNikolas/Node.js-User-Authentication-with-JWT).
