@@ -1,9 +1,9 @@
 .btn-td {
-    padding: 0.4em 1.4em !important;
+  padding: 0.4em 1.4em !important;
 }
 
 @media screen and (orientation: portrait) {
-    .btn-td {
-        padding: 5px !important;
-    }
+  .btn-td {
+    padding: 5px !important;
+  }
 }
