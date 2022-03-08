@@ -10,7 +10,7 @@ const handleFormSubmit = async (
   setCurrentPage,
   user
 ) => {
-    try {
+  try {
     const token = user.data.token;
     const body = {
       data: {
@@ -36,7 +36,11 @@ const handleFormSubmit = async (
       if (todos.length < pageLimit) {
         setTodos([
           ...todos,
-          { todo_uid: newTodo_uid, description: newTodoDescription, created: new Date (result.attributes.timestamps.created) },
+          {
+            todo_uid: newTodo_uid,
+            description: newTodoDescription,
+            created: new Date(result.attributes.timestamps.created),
+          },
         ]);
       } else {
         const nextPage = pagination.links.next;

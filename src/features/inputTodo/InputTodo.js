@@ -32,14 +32,11 @@ const InputTodo = ({ todos, setTodos, pagination, setCurrentPage }) => {
       setCurrentPage,
       user
     );
-    inputRef.current.focus()
+    inputRef.current.focus();
   };
 
   return (
-    <form
-      onSubmit={handleCreateTodo}
-      className="d-flex mt-5"
-    >
+    <form onSubmit={handleCreateTodo} className="d-flex mt-5">
       <input
         ref={inputRef}
         onInvalid={handleValidity}

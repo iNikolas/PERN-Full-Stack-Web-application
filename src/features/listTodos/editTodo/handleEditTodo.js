@@ -13,9 +13,9 @@ const handleEditTodo = async (
       type: "todo",
       id: todo_uid,
       attributes: {
-        description: modalDescription
-      }
-    }
+        description: modalDescription,
+      },
+    },
   };
 
   const response = await fetch(`${backend}/todos/${todo_uid}`, {
@@ -23,9 +23,9 @@ const handleEditTodo = async (
     headers: {
       "Content-Type": "application/vnd.api+json",
       Accept: "application/vnd.api+json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   });
   const resultRaw = await response.json();
   const result = resultRaw.data;
@@ -36,7 +36,7 @@ const handleEditTodo = async (
         return {
           todo_uid: result.id,
           description: result.attributes.description,
-          created: new Date(result.attributes.timestamps.created)
+          created: new Date(result.attributes.timestamps.created),
         };
       return entry;
     });
