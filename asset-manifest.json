@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/PERN-Full-Stack-Web-application/static/css/main.f23913f0.css",
-    "main.js": "/PERN-Full-Stack-Web-application/static/js/main.3379ce6a.js",
+    "main.js": "/PERN-Full-Stack-Web-application/static/js/main.56c7d19c.js",
     "static/media/background_image.jpg": "/PERN-Full-Stack-Web-application/static/media/background_image.6eda3a5f0bf2234f2867.jpg",
     "static/media/logo.webp": "/PERN-Full-Stack-Web-application/static/media/logo.37d53810fcbb6c40691a.webp",
     "static/media/logout.svg": "/PERN-Full-Stack-Web-application/static/media/logout.ea67a7b8d2840bb74d549d91fe901d45.svg",
     "index.html": "/PERN-Full-Stack-Web-application/index.html",
     "main.f23913f0.css.map": "/PERN-Full-Stack-Web-application/static/css/main.f23913f0.css.map",
-    "main.3379ce6a.js.map": "/PERN-Full-Stack-Web-application/static/js/main.3379ce6a.js.map"
+    "main.56c7d19c.js.map": "/PERN-Full-Stack-Web-application/static/js/main.56c7d19c.js.map"
   },
   "entrypoints": [
     "static/css/main.f23913f0.css",
-    "static/js/main.3379ce6a.js"
+    "static/js/main.56c7d19c.js"
   ]
 }
