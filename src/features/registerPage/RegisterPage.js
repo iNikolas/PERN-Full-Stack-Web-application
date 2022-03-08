@@ -95,6 +95,7 @@ const RegisterPage = ({ setUser }) => {
               <span>
                 Need an account?{" "}
                 <button
+                  type="button"
                   className="link-button"
                   onClick={() => setMode("register")}
                 >
@@ -106,6 +107,7 @@ const RegisterPage = ({ setUser }) => {
               <span>
                 Already registered?{" "}
                 <button
+                  type="button"
                   className="link-button"
                   onClick={() => setMode("signIn")}
                 >
@@ -115,6 +117,7 @@ const RegisterPage = ({ setUser }) => {
             )}
             {mode === "register" && (
               <button
+                type="submit"
                 disabled={working}
                 onClick={handleFormSubmit(
                   "",
@@ -127,7 +130,6 @@ const RegisterPage = ({ setUser }) => {
                   setShowOverlay,
                   setErrorClassName
                 )}
-                type="submit"
                 className="login-button"
               >
                 Register
@@ -135,6 +137,7 @@ const RegisterPage = ({ setUser }) => {
             )}
             {mode === "signIn" && (
               <button
+                type="submit"
                 disabled={working}
                 onClick={handleFormSubmit(
                   "login",
@@ -147,7 +150,6 @@ const RegisterPage = ({ setUser }) => {
                   setShowOverlay,
                   setErrorClassName
                 )}
-                type="submit"
                 className="login-button"
               >
                 Sign In
