@@ -37,7 +37,6 @@ function App() {
 
   useEffect(() => {
     if (userId && !working) {
-      console.log("update!");
       handleGetTodos(currentPage, setTodos, setPagination, user, setWorking)
     };
   }, [userId, currentPage, isScarcity, isOverflow, isEmptyTodoList]);
