@@ -1,4 +1,4 @@
-import { backend } from "../../common/constants";
+import { BACKEND } from "../../common/constants";
 import handleToastErrorCreation from "../../common/ToastError/handleToastErrorCreation";
 
 const handleFormSubmit = (
@@ -30,7 +30,7 @@ const handleFormSubmit = (
         },
       };
 
-      const response = await fetch(`${backend}/users/${endPointString}`, {
+      const response = await fetch(`${BACKEND}/users/${endPointString}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/vnd.api+json",

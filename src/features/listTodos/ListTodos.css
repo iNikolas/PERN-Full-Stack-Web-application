@@ -7,3 +7,14 @@
     padding: 5px !important;
   }
 }
+
+
+.todo-table {
+  width: 100px !important;
+}
+
+.description-cell {
+  max-width: 1px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+}

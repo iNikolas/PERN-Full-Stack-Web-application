@@ -4,36 +4,43 @@ import ListTodos from "./features/listTodos/ListTodos";
 import InputTodo from "./features/inputTodo/InputTodo";
 import handleGetTodos from "./handleGetTodos";
 import Paginator from "./features/paginator/Paginator";
-import { backend, pageLimit } from "./common/constants";
+import { INITIAL_LINK, PAGE_LIMIT } from "./common/constants";
 import RegisterPage from "./features/registerPage/RegisterPage";
 import { UserContext } from "./common/userContext";
 import Header from "./features/header/Header";
 import Dashboard from "./features/dashboard/Dashboard";
 
-const initialLink = `${backend}/todos?page[offset]=0&page[limit]=${pageLimit}`;
-const nextLink = `${backend}/todos?page[offset]=${pageLimit}&page[limit]=${pageLimit}`;
+
 
 function App() {
   const [user, setUser] = useContext(UserContext);
   const userId = user?.data?.id;
   const [showDashboard, setShowDashboard] = useState(false);
   const [todos, setTodos] = useState([]);
+  const [working, setWorking] = useState(false)
+
   const [pagination, setPagination] = useState({
     links: {
-      self: `${backend}/todos?page[offset]=0&page[limit]=${pageLimit}`,
-      first: initialLink,
+      self: INITIAL_LINK,
+      first: INITIAL_LINK,
       prev: null,
-      next: nextLink,
-      last: initialLink,
+      next: null,
+      last: INITIAL_LINK,
     },
     meta: { totalPages: null },
   });
   const [currentPage, setCurrentPage] = useState(pagination.links.self);
-  const isEmptyTodoList = !!todos.length;
+
+  const isEmptyTodoList = !todos.length && pagination.links.self === pagination.links.first
+  const isScarcity = todos.length < PAGE_LIMIT && pagination.links.next
+  const isOverflow = todos.length > PAGE_LIMIT
 
   useEffect(() => {
-    if (userId) handleGetTodos(currentPage, setTodos, setPagination, user);
-  }, [userId, currentPage, isEmptyTodoList]);
+    if (userId && !working) {
+      console.log("update!");
+      handleGetTodos(currentPage, setTodos, setPagination, user, setWorking)
+    };
+  }, [userId, currentPage, isScarcity, isOverflow, isEmptyTodoList]);
 
   if (!user) return <RegisterPage setUser={setUser} />;
 

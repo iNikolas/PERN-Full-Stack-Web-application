@@ -1,4 +1,4 @@
-import { backend, pageLimit } from "../../common/constants";
+import { BACKEND, PAGE_LIMIT } from "../../common/constants";
 import handleToastErrorCreation from "../../common/ToastError/handleToastErrorCreation";
 
 const handleLogoutUser = async (
@@ -8,7 +8,7 @@ const handleLogoutUser = async (
   setCurrentPage
 ) => {
   try {
-    const response = await fetch(`${backend}/users/logout`, {
+    const response = await fetch(`${BACKEND}/users/logout`, {
       method: "DELETE",
       headers: {
         Accept: "application/vnd.api+json",
@@ -22,7 +22,7 @@ const handleLogoutUser = async (
     console.error(error.message);
   } finally {
     setUser(null);
-    setCurrentPage(`${backend}/todos?page[offset]=0&page[limit]=${pageLimit}`);
+    setCurrentPage(`${BACKEND}/todos?page[offset]=0&page[limit]=${PAGE_LIMIT}`);
     setTodos([]);
   }
 };

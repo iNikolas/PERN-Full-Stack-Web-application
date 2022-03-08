@@ -1,4 +1,4 @@
-import { backend, pageLimit } from "../../common/constants";
+import { BACKEND, INITIAL_LINK } from "../../common/constants";
 
 const handleFormSubmit = async (
   event,
@@ -18,7 +18,7 @@ const handleFormSubmit = async (
         attributes: { description },
       },
     };
-    const response = await fetch(`${backend}/todos`, {
+    const response = await fetch(`${BACKEND}/todos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/vnd.api+json",
@@ -33,44 +33,17 @@ const handleFormSubmit = async (
     const newTodoDescription = result.attributes?.description;
 
     if (newTodo_uid) {
-      if (todos.length < pageLimit) {
-        setTodos([
-          ...todos,
-          {
-            todo_uid: newTodo_uid,
-            description: newTodoDescription,
-            created: new Date(result.attributes.timestamps.created),
-          },
-        ]);
-      } else {
-        const nextPage = pagination.links.next;
-        const lastPage = pagination.links.last;
-        const currentPage = pagination.links.self;
-        const totalTodos = pagination.meta.totalTodos;
-
-        if (!nextPage) {
-          const currentOffset =
-            currentPage.match(/page\[offset]=(?<pageOffset>\d+)/).groups
-              .pageOffset || "0";
-          const newOffset = +currentOffset + pageLimit;
-          setCurrentPage(
-            `${backend}/todos?page[offset]=${newOffset}&page[limit]=${pageLimit}`
-          );
-        }
-        if (nextPage && !!(totalTodos % pageLimit)) {
-          setCurrentPage(lastPage);
-        }
-        if (nextPage && !(totalTodos % pageLimit)) {
-          const lastOffset =
-            lastPage.match(/page\[offset]=(?<pageOffset>\d+)/).groups
-              .pageOffset || "0";
-          const newOffset = +lastOffset + pageLimit;
-          setCurrentPage(
-            `${backend}/todos?page[offset]=${newOffset}&page[limit]=${pageLimit}`
-          );
-        }
-      }
       setDescription("");
+      if (pagination.links.self !== INITIAL_LINK)
+        return setCurrentPage(INITIAL_LINK);
+      setTodos([
+        {
+          todo_uid: newTodo_uid,
+          description: newTodoDescription,
+          created: new Date(result.attributes.timestamps.created),
+        },
+        ...todos,
+      ]);
     }
   } catch (error) {
     console.error(error.message);

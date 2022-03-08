@@ -1,4 +1,4 @@
-import { backend } from "../../../common/constants";
+import { BACKEND } from "../../../common/constants";
 
 const handleEditTodo = async (
   modalDescription,
@@ -18,7 +18,7 @@ const handleEditTodo = async (
     },
   };
 
-  const response = await fetch(`${backend}/todos/${todo_uid}`, {
+  const response = await fetch(`${BACKEND}/todos/${todo_uid}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/vnd.api+json",

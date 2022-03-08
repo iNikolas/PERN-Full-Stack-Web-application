@@ -24,6 +24,7 @@ const Dashboard = ({ showDashboard, setShowDashboard }) => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [errorClassName, setErrorClassName] = useState("");
   const [working, setWorking] = useState(false);
+  const [hidePasswordInput, setHidePasswordInput] = useState(true);
 
   const isDisabled =
     !oldPassword ||
@@ -93,8 +94,14 @@ const Dashboard = ({ showDashboard, setShowDashboard }) => {
       setShowOverlay(false);
       setErrorClassName("");
       setError(null);
+      setHidePasswordInput(true);
     }
   }, [showDashboard, name]);
+
+  useEffect(() => {
+    if (changePassword || name !== newName) setHidePasswordInput(false);
+    if (!changePassword && name === newName) setHidePasswordInput(true);
+  }, [changePassword, newName]);
 
   return (
     <Modal
@@ -131,17 +138,19 @@ const Dashboard = ({ showDashboard, setShowDashboard }) => {
             </Form.Text>
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formOldPassword">
-            <Form.Label>Current password</Form.Label>
-            <Form.Control
-              value={oldPassword}
-              onChange={handleFieldChange("oldPassword")}
-              required
-              type="password"
-              placeholder="Password"
-            />
-            <Form.Text className="text-muted">Can not be empty</Form.Text>
-          </Form.Group>
+          {!hidePasswordInput && (
+            <Form.Group className="mb-3" controlId="formOldPassword">
+              <Form.Label>Current password</Form.Label>
+              <Form.Control
+                value={oldPassword}
+                onChange={handleFieldChange("oldPassword")}
+                required
+                type="password"
+                placeholder="Password"
+              />
+              <Form.Text className="text-muted">Can not be empty</Form.Text>
+            </Form.Group>
+          )}
 
           {changePassword && (
             <>

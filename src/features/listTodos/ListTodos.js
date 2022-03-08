@@ -29,7 +29,7 @@ const ListTodos = ({ todos, setTodos, currentPage, setCurrentPage }) => {
         <td className="text-center align-middle btn-td">
           {convertDateToString(created)}
         </td>
-        <td className="w-100 overflow-hidden">{todoEntry.description}</td>
+        <td className="w-100 description-cell">{todoEntry.description}</td>
         <td className="text-center align-middle btn-td">
           <EditTodo todoEntry={todoEntry} todos={todos} setTodos={setTodos} />
         </td>
@@ -52,19 +52,17 @@ const ListTodos = ({ todos, setTodos, currentPage, setCurrentPage }) => {
   });
 
   return (
-    <>
-      <Table className="mt-5" striped bordered hover>
-        <thead>
-          <tr>
-            <th>Created</th>
-            <th>Description</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>{todosMapped}</tbody>
-      </Table>
-    </>
+    <Table className="mt-5" striped bordered hover>
+      <thead>
+        <tr>
+          <th>Created</th>
+          <th>Description</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody className='todo-table'>{todosMapped}</tbody>
+    </Table>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Pagination from "react-bootstrap/Pagination";
 
-const Paginator = ({ pagination, setCurrentPage }) => {
+const   Paginator = ({ pagination, setCurrentPage }) => {
   const { first, last, next, prev } = pagination.links;
   const { totalPages, currentPage } = pagination.meta;
   const prevPage = currentPage - 1;

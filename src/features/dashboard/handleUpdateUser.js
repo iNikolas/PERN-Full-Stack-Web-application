@@ -1,10 +1,10 @@
-import { backend } from "../../common/constants";
+import { BACKEND } from "../../common/constants";
 import handleToastErrorCreation from "../../common/ToastError/handleToastErrorCreation";
 
 const handleUpdateUser = async (body, user, setUser, setError) => {
   const token = user.data.token;
 
-  const response = await fetch(`${backend}/users/${body.data.id}`, {
+  const response = await fetch(`${BACKEND}/users/${body.data.id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/vnd.api+json",

@@ -1,5 +1,7 @@
-const handleGetTodos = async (currentPage, setTodos, setPagination, user) => {
+const handleGetTodos = async (currentPage, setTodos, setPagination, user, setWorking) => {
   try {
+    setWorking(true)
+
     const token = user.data.token;
 
     const responseRaw = await fetch(currentPage, {
@@ -29,6 +31,8 @@ const handleGetTodos = async (currentPage, setTodos, setPagination, user) => {
     setTodos(allTodos);
   } catch (error) {
     console.error(error.message);
+  } finally {
+    setWorking(false)
   }
 };
 
