@@ -1,7 +1,6 @@
 import { BACKEND, INITIAL_LINK } from "../../common/constants";
 
 const handleFormSubmit = async (
-  event,
   description,
   setDescription,
   todos,

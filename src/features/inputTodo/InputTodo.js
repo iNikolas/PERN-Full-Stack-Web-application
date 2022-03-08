@@ -7,23 +7,28 @@ const InputTodo = ({ todos, setTodos, pagination, setCurrentPage }) => {
   const inputRef = useRef(null);
   const [description, setDescription] = useState("");
 
-  const handleValidity = (event) => {
-    const input = event.target;
-    if (input.validity.valueMissing) {
-      input.setCustomValidity("This field can not be empty! Please fill it in");
-    } else {
-      input.setCustomValidity("");
-    }
+  const handleValidity = () => {
+    const input = inputRef.current;
+    if (input.validity.valueMissing)
+      return input.setCustomValidity(
+        "This field can not be empty! Please fill it in."
+      );
+    if (input.validity.patternMismatch)
+      return input.setCustomValidity(
+        "This field can not consist only of whitespaces! Please fill it in."
+      );
+
+    input.setCustomValidity("");
   };
 
   const handleChange = (event) => {
     setDescription(event.target.value);
-    handleValidity(event);
+    handleValidity();
   };
   const handleCreateTodo = async (event) => {
     event.preventDefault();
+
     await handleFormSubmit(
-      event,
       description,
       setDescription,
       todos,
@@ -38,6 +43,7 @@ const InputTodo = ({ todos, setTodos, pagination, setCurrentPage }) => {
   return (
     <form onSubmit={handleCreateTodo} className="d-flex mt-5">
       <input
+        pattern=".+\S+.?"
         ref={inputRef}
         onInvalid={handleValidity}
         required
