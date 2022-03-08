@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import handleFormSubmit from "./handleFormSubmit";
 import { UserContext } from "../../common/userContext";
 
 const InputTodo = ({ todos, setTodos, pagination, setCurrentPage }) => {
   const [user] = useContext(UserContext);
+  const inputRef = useRef(null);
   const [description, setDescription] = useState("");
 
   const handleValidity = (event) => {
@@ -19,24 +20,28 @@ const InputTodo = ({ todos, setTodos, pagination, setCurrentPage }) => {
     setDescription(event.target.value);
     handleValidity(event);
   };
+  const handleCreateTodo = async (event) => {
+    event.preventDefault();
+    await handleFormSubmit(
+      event,
+      description,
+      setDescription,
+      todos,
+      setTodos,
+      pagination,
+      setCurrentPage,
+      user
+    );
+    inputRef.current.focus()
+  };
 
   return (
     <form
-      onSubmit={(event) =>
-        handleFormSubmit(
-          event,
-          description,
-          setDescription,
-          todos,
-          setTodos,
-          pagination,
-          setCurrentPage,
-          user
-        )
-      }
+      onSubmit={handleCreateTodo}
       className="d-flex mt-5"
     >
       <input
+        ref={inputRef}
         onInvalid={handleValidity}
         required
         maxLength="255"

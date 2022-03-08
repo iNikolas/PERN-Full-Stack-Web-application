@@ -17,9 +17,8 @@ const handleGetTodos = async (currentPage, setTodos, setPagination, user) => {
     setPagination({ links, meta });
 
     allTodosRaw.forEach((todoEntry) => {
-      const todo_uid = todoEntry.id;
-      const description = todoEntry.attributes.description;
-      const newTodo = { todo_uid, description };
+
+      const newTodo = { todo_uid: todoEntry.id, description: todoEntry.attributes.description, created: new Date(todoEntry.attributes.timestamps.created) };
 
       allTodos.push(newTodo);
     });

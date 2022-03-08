@@ -38,7 +38,7 @@ function App() {
   if (!user) return <RegisterPage setUser={setUser} />;
 
   return (
-    <>
+    <div>
       <Header
         setCurrentPage={setCurrentPage}
         setTodos={setTodos}
@@ -69,7 +69,7 @@ function App() {
         showDashboard={showDashboard}
         setShowDashboard={setShowDashboard}
       />
-    </>
+    </div>
   );
 }
 
