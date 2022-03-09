@@ -23,6 +23,7 @@ const handleGetTodos = async (currentPage, setTodos, setPagination, user, setWor
         todo_uid: todoEntry.id,
         description: todoEntry.attributes.description,
         created: new Date(todoEntry.attributes.timestamps.created),
+        isDone: todoEntry.attributes.isDone
       };
 
       allTodos.push(newTodo);

@@ -5,8 +5,8 @@ import handleEditTodo from "./handleEditTodo";
 import { UserContext } from "../../../common/userContext";
 
 const EditTodoModal = ({ show, setShow, todoEntry, todos, setTodos }) => {
-  const todo_uid = todoEntry.todo_uid;
-  const description = todoEntry.description;
+  const {todo_uid, description, isDone} = todoEntry;
+
   const [modalDescription, setModalDescription] = useState(description);
   const isDisabled =
     description === modalDescription || !modalDescription.length;
@@ -14,7 +14,7 @@ const EditTodoModal = ({ show, setShow, todoEntry, todos, setTodos }) => {
 
   const handleClose = () => setShow(false);
   const handleEdit = async () => {
-    await handleEditTodo(modalDescription, todos, setTodos, todo_uid, user);
+    await handleEditTodo(modalDescription, todos, setTodos, todo_uid, user, isDone);
     handleClose();
   };
   const handleModalDescriptionChange = (event) => {

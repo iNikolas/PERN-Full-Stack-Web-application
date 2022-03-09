@@ -5,7 +5,8 @@ const handleEditTodo = async (
   todos,
   setTodos,
   todo_uid,
-  user
+  user,
+  isDone
 ) => {
   const token = user.data.token;
   const body = {
@@ -14,6 +15,7 @@ const handleEditTodo = async (
       id: todo_uid,
       attributes: {
         description: modalDescription,
+        isDone,
       },
     },
   };
@@ -37,6 +39,7 @@ const handleEditTodo = async (
           todo_uid: result.id,
           description: result.attributes.description,
           created: new Date(result.attributes.timestamps.created),
+          isDone: result.attributes.isDone,
         };
       return entry;
     });

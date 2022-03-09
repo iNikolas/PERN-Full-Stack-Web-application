@@ -8,7 +8,6 @@
   }
 }
 
-
 .todo-table {
   width: 100px !important;
 }
@@ -17,4 +16,27 @@
   max-width: 1px;
   overflow: hidden;
   overflow-wrap: break-word;
+}
+
+.is-done-checkbox {
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.is-one-row-style {
+  background-color: rgba(144, 238, 144, 0.4);
+}
+
+.is-one-row-style:nth-child(2n) {
+  background-color: rgba(152, 251, 152, 0.4);
+}
+.is-done-strikethrough {
+  width: 102.5%;
+  background-color: #2c3034;
+  height: 2px;
+  top: 50%;
+  left: 0;
+  transform: translateX(-1.25%);
 }

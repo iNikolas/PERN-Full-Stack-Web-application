@@ -43,7 +43,7 @@ const InputTodo = ({ todos, setTodos, pagination, setCurrentPage }) => {
   return (
     <form onSubmit={handleCreateTodo} className="d-flex mt-5">
       <input
-        pattern=".?\S+.?"
+        pattern=".*\S+.*"
         ref={inputRef}
         onInvalid={handleValidity}
         required
