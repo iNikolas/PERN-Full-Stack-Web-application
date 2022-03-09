@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/PERN-Full-Stack-Web-application/static/css/main.ee934e5a.css",
-    "main.js": "/PERN-Full-Stack-Web-application/static/js/main.c886f188.js",
+    "main.css": "/PERN-Full-Stack-Web-application/static/css/main.4b545230.css",
+    "main.js": "/PERN-Full-Stack-Web-application/static/js/main.7ea17cd9.js",
     "static/media/background_image.jpg": "/PERN-Full-Stack-Web-application/static/media/background_image.6eda3a5f0bf2234f2867.jpg",
     "static/media/logo.webp": "/PERN-Full-Stack-Web-application/static/media/logo.37d53810fcbb6c40691a.webp",
     "static/media/logout.svg": "/PERN-Full-Stack-Web-application/static/media/logout.ea67a7b8d2840bb74d549d91fe901d45.svg",
     "index.html": "/PERN-Full-Stack-Web-application/index.html",
-    "main.ee934e5a.css.map": "/PERN-Full-Stack-Web-application/static/css/main.ee934e5a.css.map",
-    "main.c886f188.js.map": "/PERN-Full-Stack-Web-application/static/js/main.c886f188.js.map"
+    "main.4b545230.css.map": "/PERN-Full-Stack-Web-application/static/css/main.4b545230.css.map",
+    "main.7ea17cd9.js.map": "/PERN-Full-Stack-Web-application/static/js/main.7ea17cd9.js.map"
   },
   "entrypoints": [
-    "static/css/main.ee934e5a.css",
-    "static/js/main.c886f188.js"
+    "static/css/main.4b545230.css",
+    "static/js/main.7ea17cd9.js"
   ]
 }
